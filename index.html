@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html style="height:100%; margin:0; padding:0">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>Clock v1.1.0</title>
+	<link rel="shortcut icon" type="image/png" href="clock.png"/>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
+
+	<style type="text/css">
+		/* Customizable font and colors */
+		html {
+			background: #000000;
+			font-family: 'Source Code Pro', monospace;
+			/*font-family: 'Open Sans', sans-serif;*/
+			font-weight: bold;
+			color: #ffffff;
+		}
+		body {
+			display: flex;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			justify-content: center;
+			align-items: center
+		}
+
+		h1, h2 {
+			margin:  0;
+			padding: 0;			
+		}
+		h1 {
+			font-size: 11em;
+		}
+		h2 {
+			font-size: 2.5em;
+			margin-top: -40px;
+		}
+
+		#datetext {
+			text-align: center;
+		}
+
+
+	</style>
+</head>
+	
+<body>
+<div class="container">
+	<h1 id="clocktext"></h1>
+	<h2 id="datetext"></h2>
+</div>
+
+
+<!--
+  - Full screen clock (24-hour)
+  - Copyright (c) 2020 Project Nayuki. All rights reserved.
+  - 
+  - https://www.nayuki.io/page/full-screen-clock-javascript
+  -->
+<script>
+
+	"use strict";
+	
+	var textElem = document.getElementById("clocktext");
+	var dateElem = document.getElementById("datetext");
+
+	function updateClock() {
+		var d = new Date();
+		var s = "";
+		s += (10 > d.getHours  () ? "0" : "") + d.getHours  () + ":";
+		s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes();
+		textElem.textContent = s;
+		setTimeout(updateClock, 60000 - d.getTime() % 60000 + 100);
+	}
+
+	function updateDate() {
+		var dt = new Date();
+
+		var options = {
+			weekday: 'long',
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+		}	
+		dateElem.textContent = dt.toLocaleString('en-gb',options);
+	}
+	
+	updateClock();
+	updateDate();
+
+</script>
+</body>
+</html>
