@@ -1,7 +1,5 @@
 # Clock
 
-## Description
-
 I like to have a large digital clock on my Windows desktop. However, I am unable to run any kind of widget (Windows 8 Gadgets, Rainmeter, etc.) on my work laptop, but I can open web pages in a browser.
 
 So, I downloaded this Full Screen Clock (24-hour) code from [Project Nayuki](https://www.nayuki.io/page/full-screen-clock-javascript) with permission, as the Project Nayuki website advises:
