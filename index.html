@@ -2,7 +2,7 @@
 <html style="height:100%; margin:0; padding:0">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>Clock v2.0.0</title>
+	<title>Clock v2.1.0</title>
 	<link rel="shortcut icon" type="image/png" href="clock.png"/>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,44 +109,45 @@
 	</tr>
 </table>
 
-<!--
-  - Code based on Full screen clock (24-hour)
-  - Copyright (c) 2020 Project Nayuki. All rights reserved.
-  - https://www.nayuki.io/page/full-screen-clock-javascript
-  -->
 <script>
+
+/**
+ * Code based on Full screen clock (24-hour)
+ * Copyright (c) 2020 Project Nayuki. All rights reserved.
+ * https://www.nayuki.io/page/full-screen-clock-javascript
+ */
 
 	"use strict";
 	
-	var clockTextElem   = document.getElementById("clocktext");
+	var clock_text            = document.getElementById("clocktext");
 
-	var dateNumberElem  = document.getElementById("js-datenumber");
-	var dateMonthElem   = document.getElementById("js-datemonth");
-	var dateDayElem     = document.getElementById("js-dateday");
-	var dateYearElem    = document.getElementById("js-dateyear");
+	var date_number_text      = document.getElementById("js-datenumber");
+	var date_month_text       = document.getElementById("js-datemonth");
+	var date_dayofweek_text   = document.getElementById("js-dateday");
+	var date_year_text        = document.getElementById("js-dateyear");
 
 	function updateClock() {
 		var clock = new Date();
-		var currentTime = "";
-		currentTime += (10 > clock.getHours  () ? "0" : "") + clock.getHours  () + ":";
-		currentTime += (10 > clock.getMinutes() ? "0" : "") + clock.getMinutes();
-		clockTextElem.textContent = currentTime;
+		var current_time_text = "";
+		current_time_text += (10 > clock.getHours  () ? "0" : "") + clock.getHours  () + ":";
+		current_time_text += (10 > clock.getMinutes() ? "0" : "") + clock.getMinutes();
+		clock_text.textContent = current_time_text;
 
 		setTimeout(() => {
-				updateClock();
+		    updateClock();
 		}, 60000 - clock.getTime() % 60000 + 100);
 	}
 
 	function updateDate() {
-		var d = new Date();
+		var today = new Date();
 
-		dateNumberElem.textContent = d.toLocaleString('en-gb',{day:     'numeric'});
-		 dateMonthElem.textContent = d.toLocaleString('en-gb',{month:   'long'});
-		   dateDayElem.textContent = d.toLocaleString('en-gb',{weekday: 'long'}) + ' 📅';
-		  dateYearElem.textContent = d.toLocaleString('en-gb',{year:    'numeric'});
+		date_number_text.textContent = today.toLocaleString('en-gb',{day:     'numeric'});
+		 date_month_text.textContent = today.toLocaleString('en-gb',{month:   'long'});
+	 date_dayofweek_text.textContent = today.toLocaleString('en-gb',{weekday: 'long'}) + ' 📅';
+		  date_year_text.textContent = today.toLocaleString('en-gb',{year:    'numeric'});
 
 		setTimeout(() => {
-				updateDate();
+		    updateDate();
 		}, 60000);
 	}
 	
