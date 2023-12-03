@@ -112,7 +112,6 @@
 <!--
   - Code based on Full screen clock (24-hour)
   - Copyright (c) 2020 Project Nayuki. All rights reserved.
-  - 
   - https://www.nayuki.io/page/full-screen-clock-javascript
   -->
 <script>
@@ -128,10 +127,10 @@
 
 	function updateClock() {
 		var clock = new Date();
-		var s = "";
-		s += (10 > clock.getHours  () ? "0" : "") + clock.getHours  () + ":";
-		s += (10 > clock.getMinutes() ? "0" : "") + clock.getMinutes();
-		clockTextElem.textContent = s;
+		var currentTime = "";
+		currentTime += (10 > clock.getHours  () ? "0" : "") + clock.getHours  () + ":";
+		currentTime += (10 > clock.getMinutes() ? "0" : "") + clock.getMinutes();
+		clockTextElem.textContent = currentTime;
 
 		setTimeout(() => {
 				updateClock();
