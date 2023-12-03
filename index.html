@@ -2,7 +2,7 @@
 <html style="height:100%; margin:0; padding:0">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>Clock v1.2.0</title>
+	<title>Clock v2.0.0</title>
 	<link rel="shortcut icon" type="image/png" href="clock.png"/>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,13 +10,13 @@
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
 
 	<style type="text/css">
-		/* Customizable font and colors */
+
 		html {
-			background: #000000;
+			background: #111;
 			font-family: 'Open Sans', sans-serif;
-			font-weight: bold;
-			color: #ffffff;
+			color: white;
 		}
+
 		body {
 			display: flex;
 			height: 100%;
@@ -26,35 +26,91 @@
 			align-items: center
 		}
 
-		h1, h2 {
+		/* reset */
+		h1, p, table, th, td {
+			line-height: 1;
 			margin:  0;
-			padding: 0;			
+			padding: 0;
 		}
+		
+		/* time 01:04 */
 		h1 {
 			font-size: 11em;
 		}
-		h2 {
+
+
+		/* colours */
+		p {color: #888;}
+		.date-day {color: #ddd;}
+
+		/* date */
+		p {
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+
+		/* 11 */
+		.date-number {
+			font-size: 7em;
+		}
+
+		/* November */
+		.date-month {
+			font-size: 3.5em;
+		}
+
+		/* Thursday */
+		.date-day {
+			font-size: 2em;
+		}
+
+		/* 1971 */
+		.date-year {
 			font-size: 2.5em;
-			margin-top: -40px;
+			rotate: 90deg;
 		}
 
-		#datetext {
-			text-align: center;
+		.date-number-row {
+			padding-right: 2em;
 		}
 
+		.date-year-row {
+			vertical-align: middle;
+		}
 
 	</style>
 </head>
 	
 <body>
-<div class="container">
-	<h1 id="clocktext"></h1>
-	<h2 id="datetext"></h2>
-</div>
 
+<table>
+	<tr>
+		<td colspan="3">
+			<h1 id="clocktext"></h1>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="date-number-row" rowspan="2">
+			<p id="js-datenumber" class="date date-number"></p>
+		</td>
+		<td class="date-month-row">
+			<p id="js-datemonth" class="date date-month"></p>
+		</td>
+		<td class="date-year-row" rowspan="2">
+			<p id="js-dateyear" class="date date-year"></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="date-day-row">
+			<p id="js-dateday" class="date date-day"></p>
+		</td>
+	</tr>
+</table>
 
 <!--
-  - Full screen clock (24-hour)
+  - Code based on Full screen clock (24-hour)
   - Copyright (c) 2020 Project Nayuki. All rights reserved.
   - 
   - https://www.nayuki.io/page/full-screen-clock-javascript
@@ -63,28 +119,36 @@
 
 	"use strict";
 	
-	var textElem = document.getElementById("clocktext");
-	var dateElem = document.getElementById("datetext");
+	var clockTextElem   = document.getElementById("clocktext");
+
+	var dateNumberElem  = document.getElementById("js-datenumber");
+	var dateMonthElem   = document.getElementById("js-datemonth");
+	var dateDayElem     = document.getElementById("js-dateday");
+	var dateYearElem    = document.getElementById("js-dateyear");
 
 	function updateClock() {
-		var d = new Date();
+		var clock = new Date();
 		var s = "";
-		s += (10 > d.getHours  () ? "0" : "") + d.getHours  () + ":";
-		s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes();
-		textElem.textContent = s;
-		setTimeout(updateClock, 60000 - d.getTime() % 60000 + 100);
+		s += (10 > clock.getHours  () ? "0" : "") + clock.getHours  () + ":";
+		s += (10 > clock.getMinutes() ? "0" : "") + clock.getMinutes();
+		clockTextElem.textContent = s;
+
+		setTimeout(() => {
+				updateClock();
+		}, 60000 - clock.getTime() % 60000 + 100);
 	}
 
 	function updateDate() {
-		var dt = new Date();
+		var d = new Date();
 
-		var options = {
-			weekday: 'long',
-			day: 'numeric',
-			month: 'long',
-			year: 'numeric',
-		}	
-		dateElem.textContent = dt.toLocaleString('en-gb',options);
+		dateNumberElem.textContent = d.toLocaleString('en-gb',{day:     'numeric'});
+		 dateMonthElem.textContent = d.toLocaleString('en-gb',{month:   'long'});
+		   dateDayElem.textContent = d.toLocaleString('en-gb',{weekday: 'long'}) + ' 📅';
+		  dateYearElem.textContent = d.toLocaleString('en-gb',{year:    'numeric'});
+
+		setTimeout(() => {
+				updateDate();
+		}, 60000);
 	}
 	
 	updateClock();
